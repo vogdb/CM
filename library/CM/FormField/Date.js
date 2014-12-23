@@ -36,6 +36,15 @@ var CM_FormField_Date = CM_FormField_Abstract.extend({
    * @returns {boolean} whether the user's device has a native datepicker.
    */
   _browserHasSpinningDatePicker: function() {
-    return /Android|iPhone|iPad|iPod|IEMobile/i.test(navigator.userAgent);
+    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isIOS) {
+      return true;
+    }
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) {
+      var versionNumber = parseFloat((navigator.userAgent.match('Android ([0-9.]+)') || [])[1]);
+      return versionNumber >= 4.4;
+    }
+    return false;
   }
 });
