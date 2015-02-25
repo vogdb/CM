@@ -1,0 +1,20 @@
+{
+  "name": "CM",
+  "version": "0.0.0",
+  "description": "CM Framework",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cargomedia/CM.git"
+  },
+  "author": "cargomedia",
+  "license": "MIT",
+  "devDependencies": {
+    "glob": "~4.4",
+    "webpack": "~1.4"
+  },
+  "dependencies": {}
+}
