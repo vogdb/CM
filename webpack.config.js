@@ -12,26 +12,20 @@ rimraf.sync(buildOutputPath);
 */
 module.exports = {
   entry: {
-    core: ['modernizr', 'jserror', 'jquery', 'underscore', 'backbone']
-    ,CM_Page_Example: './library/CM/Page/Example.js'
+    core: ['modernizr', 'jserror', 'jquery', 'underscore', 'backbone'],
+    CM_Page_Example: './library/CM/Page/Example.js'
   }
   ,resolve: {
-    modulesDirectories: [].concat(glob.sync('./client-vendor/after-body/*'), glob.sync('./client-vendor/before-body/*'))
+    modulesDirectories: [].concat(glob.sync('./client-vendor/after-body/*'), glob.sync('./client-vendor/before-body/*'), './library/')
   }
-  //plugins: [
-  //  new webpack.ProvidePlugin({
-  //    '$': 'jquery',
-  //    '_': 'underscore'
-  //  })
-  //  ,new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.bundle.js')
-  //],
-  ,module: {
-    // Disable handling of unknown requires
-    //unknownContextRegExp: /$^/,
-    //unknownContextCritical: false
-  },
-
-  output: {
+  ,plugins: [
+    new webpack.ProvidePlugin({
+      '$': 'jquery'
+      ,'_': 'underscore'
+    })
+    ,new webpack.optimize.CommonsChunkPlugin('core', 'core.js')
+  ]
+  ,output: {
     path: buildOutputPath
     ,filename: '[name].js'
   }

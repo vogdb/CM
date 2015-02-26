@@ -1,17 +1,21 @@
-/**
- * @class CM_Page_Example
- * @extends CM_Page_Abstract
- */
-var CM_Page_Example = CM_Page_Abstract.extend({
+require.ensure(['CM/Page/Abstract'], function(CM_Page_Abstract) {
 
-  /** @type String */
-  _class: 'CM_Page_Example',
+  /**
+   * @class CM_Page_Example
+   * @extends CM_Page_Abstract
+   */
+  var CM_Page_Example = CM_Page_Abstract.extend({
 
-  _stateParams: ['tab'],
+    /** @type String */
+    _class: 'CM_Page_Example',
 
-  _changeState: function(state) {
-    if (state['tab']) {
-      this.findChild('CM_Component_Example').showTab(state['tab']);
+    _stateParams: ['tab'],
+
+    _changeState: function(state) {
+      if (state['tab']) {
+        this.findChild('CM_Component_Example').showTab(state['tab']);
+      }
     }
-  }
+  });
+
 });
