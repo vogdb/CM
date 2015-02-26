@@ -1,5 +1,10 @@
 var webpack = require('webpack');
 var glob = require('glob');
+var path = require('path');
+var rimraf = require('rimraf');
+
+var buildOutputPath = path.join(__dirname, 'webpack_output');
+rimraf.sync(buildOutputPath);
 
 /**
  * 1. We can not keep the same `before-body`, `after-body` structure as we want modules to be loaded only when they are needed. That is why we need define a core vendor module that is required by CM_View_Abstract hierarchy. The rest of vendor modules should be defined as standalone singular units.
@@ -7,22 +12,11 @@ var glob = require('glob');
 */
 module.exports = {
   entry: {
-    modernizr: ['./client-vendor/before-body/01-modernizr/modernizr.js']
-    ,jserror: ['./client-vendor/after-body/00-jserror/jserror.js']
-    ,jquery: ['./client-vendor/after-body/10-jquery/jquery.js']
-    ,underscore: ['./client-vendor/after-body/20-underscore/underscore.js']
-    ,backbone: ['./client-vendor/after-body/30-backbone/backbone.js']
-    ,'jquery.ui.widget': ['./client-vendor/after-body/40-jquery.ui.widget/jquery.ui.widget.js']
-    ,'jquery.fileUpload': glob.sync('./client-vendor/after-body/jquery.fileUpload/*.js')
-    //CM_Page_Abstract: './library/CM/Page/Abstract.js',
+    core: ['modernizr', 'jserror', 'jquery', 'underscore', 'backbone']
     ,CM_Page_Example: './library/CM/Page/Example.js'
-    //, afterBody: glob.sync('./client-vendor/after-body/**/*.js')
   }
   ,resolve: {
-    alias: {
-      //'jquery.ui.widget': 'jquery.ui.widget'
-      'jquery.ui.widget': __dirname + '/client-vendor/after-body/40-jquery.ui.widget/jquery.ui.widget.js'
-    }
+    modulesDirectories: [].concat(glob.sync('./client-vendor/after-body/*'), glob.sync('./client-vendor/before-body/*'))
   }
   //plugins: [
   //  new webpack.ProvidePlugin({
@@ -34,11 +28,11 @@ module.exports = {
   ,module: {
     // Disable handling of unknown requires
     //unknownContextRegExp: /$^/,
-    unknownContextCritical: false
+    //unknownContextCritical: false
   },
 
   output: {
-    path: __dirname + '/webpack_output'
+    path: buildOutputPath
     ,filename: '[name].js'
   }
 };
